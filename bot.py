@@ -7,11 +7,12 @@ from telegram import Update, BotCommand
 from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
 from apscheduler.schedulers.background import BackgroundScheduler
 import asyncio
+import os
 
 # ================== CONFIGURAÇÕES ==================
 
-BOT_TOKEN = '7663766462:AAH2c9wSqww57-3_Vny5xpHZddHT44oy2pE'
-GROUP_CHAT_ID = '-4892099940'
+BOT_TOKEN = os.getenv("BOT_TOKEN")
+GROUP_CHAT_ID = int(os.getenv("GROUP_CHAT_ID"))
 EXCHANGE = ccxt.binance()
 VALID_TIMEFRAMES = ['15m']
 SYMBOL_LIMIT = 200
