@@ -8,6 +8,8 @@ from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
 from apscheduler.schedulers.background import BackgroundScheduler
 import asyncio
 import os
+from flask import Flask
+from threading import Thread
 
 # ================== CONFIGURAÇÕES ==================
 
@@ -192,7 +194,18 @@ async def update_sinais(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await auto_analise()
     await update.message.reply_text("✅ Análise concluída e sinais enviados (se encontrados).")
 
+app = Flask('')
 
+@app.route('/')
+def home():
+    return "Bot está online!"
+
+def run():
+    app.run(host='0.0.0.0', port=8080)
+
+def keep_alive():
+    t = Thread(target=run)
+    t.start()
 # ========== Main ==========
 def main():
     global application
@@ -212,4 +225,5 @@ def main():
     application.run_polling()
 
 if __name__ == '__main__':
+    keep_alive()
     main()
